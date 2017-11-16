@@ -18,7 +18,7 @@
 
 図の目的：めっちゃサポートしてくれる（主にインテグレーションテストに関して）ことを示す
 
-##### アノテーションのカテゴライズ図
+### アノテーションのカテゴライズ図
 Springが指すのはどこか（core? boot?その他Umbrella projects?)
 
 - カテゴライズその１：Spring / Spring Boot / Umbrella projects (i.e. Spring Cloud Contract)
@@ -40,7 +40,7 @@ Springが指すのはどこか（core? boot?その他Umbrella projects?)
             - Spring Cloud Contract（発展的な TDD / アーキテクチャレベルの TDD みたいな）
 
 ## 1.3 Spring と Unit Test と Integration Test
-##### ユニットテスト
+### ユニットテスト
 true unit test＝基本的には Spring は関係するべきでないとレファレンスにすら書いてある。
 
 また、ユニットテストは本来RTI（DBなど）の関与が一切ないので、ものすごく早く実行されるものである。
@@ -49,7 +49,7 @@ true unit test＝基本的には Spring は関係するべきでないとレフ�
 
 IoCベースで作られたアプリケーションのユニットテストにspringが関与する余地はあまりないが、springはいくつかのモックオブジェクトやサポートクラスを一応提供している。
 
-###### Mock Objects
+##### Mock Objects
 - Environment
   - MockEnvironment
   - MockPropertySource
@@ -63,7 +63,7 @@ IoCベースで作られたアプリケーションのユニットテストにsp
   - MockServerHttpRequest
   - MockServerHttpResponse
   - MockServerWebExchange
-###### Support Classes
+##### Support Classes
 - General testing utilities
   - org.springframework.test.util package (use in unit & integration testing)
 - Spring MVC
@@ -74,8 +74,8 @@ IoCベースで作られたアプリケーションのユニットテストにsp
       いちいち起動してるとテストに時間がかかってしまうことの説明もアリ
 
 
-##### インテグレーションテストのゴールについて
-###### Spring Integration Testのゴール（springの恩恵を受けれる）はこれだ！
+### インテグレーションテストのゴールについて
+##### Spring Integration Testのゴール（springの恩恵を受けれる）はこれだ！
   - **Cache (絵を持って説明「時短だよ」)**
   - **テストで必ず必要なbeanをDIしてくれる**
   - **適切なトランザクション処理をしてくれる（rollbackとか）**
@@ -83,7 +83,23 @@ IoCベースで作られたアプリケーションのユニットテストにsp
 
 # 2. 基礎編２
 ## 2.1 MVC層のテスト（[Reference](https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#spring-mvc-test-framework)）
+### MockMvc
+
+### WebApplicationContext
 
 ## 2.2 データアクセス層のテスト（[Reference](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-jpa-test)）
 
-## 2.3 Spring Bootのテストサポート
+## 2.3 Spring Bootのテストサポート([Reference](https://docs.spring.io/spring-security/site/docs/current/reference/html/test-method.html))
+
+### SecurityContextHolder
+
+###### .getContext().setAuthentication()
+
+### SecurityMockMvcConfigurers.springSecurity()
+ > will perform all of the initial setup we need to integrate Spring Security with Spring MVC Test
+
+### Annotations
+
+###### @WithMockUser
+
+###### @WithUserDetails
