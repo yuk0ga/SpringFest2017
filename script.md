@@ -4,9 +4,10 @@
 
 1. TDD、なかなかうまくいかないよね。なぜ？→大変だから
 2. Springはテストの大変な部分をめっちゃ簡単にしてくれるよ。
-3. そもそもSpringで作ることで既にテストしやすいよ。
-4. さらにたくさんの便利なアノテーションを提供してくれているよ。
-5. 具体的ににどんなことができるかみてみよう。
+3. 一言で言うとめちゃくちゃたくさんの便利なアノテーションを提供してくれているよ
+   アノテーションのみならず、サポートクラスも豊富
+   そもそもSpringで作ることで既にテストしやすいよ。
+4. 具体的ににどんなことができるかみてみよう。
 ----
 # 1. 基礎編１
 ## 1.1 TDDについて
@@ -43,7 +44,7 @@ Springが指すのはどこか（core? boot?その他Umbrella projects?)
 ### ユニットテスト
 true unit test＝基本的には Spring は関係するべきでないとレファレンスにすら書いてある。
 
-また、ユニットテストは本来RTI（DBなど）の関与が一切ないので、ものすごく早く実行されるものである。
+また、ユニットテストは本来runtime infrastructure（DBなど）の関与が一切ないので、ものすごく早く実行されるものである。
 
 >True unit tests typically run extremely quickly, as there is no runtime infrastructure to set up.
 
@@ -76,18 +77,39 @@ IoCベースで作られたアプリケーションのユニットテストにsp
 
 ### インテグレーションテストのゴールについて
 ##### Spring Integration Testのゴール（springの恩恵を受けれる）はこれだ！
-  - **Cache (絵を持って説明「時短だよ」)**
+  - **Caching**
+
+時短のため。デフォルトで、一度ロードされたApplicationContextは各テストで再利用される。必要に応じて、ロードし直すように設定することもできる。(@DirtiesContext)
+
   - **テストで必ず必要なbeanをDIしてくれる**
-  - **適切なトランザクション処理をしてくれる（rollbackとか）**
+
+
+  - **適切なトランザクション処理ができる（rollbackとか）**
+
+@Transactional
+デフォルトでテスト後に全てのトランザクションをロールバックしてくれる
+
   - 便利クラスの提供
+
+@RunWith(SpringRunner.class)
+
+
 
 # 2. 基礎編２
 ## 2.1 MVC層のテスト（[Reference](https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#spring-mvc-test-framework)）
 ### MockMvc
 
+サーブレットコンテナを立ち上げずに、リクエストを再現したりレスポンスを生成したりできる。ウェブのテストの際にとても便利。
+
+###### .perform
+###### .andExpect()
+###### redirectedUrl()
+
 ### WebApplicationContext
 
 ## 2.2 データアクセス層のテスト（[Reference](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-jpa-test)）
+
+### @DataJpaTest
 
 ## 2.3 Spring Bootのテストサポート([Reference](https://docs.spring.io/spring-security/site/docs/current/reference/html/test-method.html))
 
@@ -102,4 +124,9 @@ IoCベースで作られたアプリケーションのユニットテストにsp
 
 ###### @WithMockUser
 
+ユーザーが存在する必要がない。
+username "user", the password "password", and the roles "ROLE_USER".
+
 ###### @WithUserDetails
+
+カスタムのUserDetailsServiceが指定できるが、ユーザーが存在する必要がある
